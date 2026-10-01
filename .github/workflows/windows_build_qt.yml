@@ -48,6 +48,7 @@ on:
 jobs:
   build_windows_qt:
     name: ${{ inputs.jobName }}
+    if: inputs.jobName == 'MSVC AVX2'
     runs-on: ${{ inputs.os }}
     # Set some sort of timeout in the event of run-away builds.  We are limited on concurrent jobs so, get rid of them.
     timeout-minutes: 90
@@ -118,8 +119,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: deps
-          key: ${{ inputs.os }} ${{ inputs.platform }} deps ${{ hashFiles('.github/workflows/scripts/windows/build-dependencies.bat', '.github/workflows/scripts/common/*.patch') }}
-
+          key: ${{ inputs.os }} ${{ inputs.platform }} deps ${{ hashFiles('.github/workflows/scripts/windows/build-dependencies.bat', '.github/workflows/scripts/common/*.patch') }} dual-gun-v1
       - name: Build Dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         env:
