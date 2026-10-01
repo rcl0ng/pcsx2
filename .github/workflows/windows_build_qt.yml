@@ -121,10 +121,10 @@ jobs:
           path: deps
           key: ${{ inputs.os }} ${{ inputs.platform }} deps ${{ hashFiles('.github/workflows/scripts/windows/build-dependencies.bat', '.github/workflows/scripts/common/*.patch') }} dual-gun-v1
       - name: Build Dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
+        shell: cmd
         env:
           DEBUG: 0
-        run: .github/workflows/scripts/windows/build-dependencies.bat
+        run: call .github\workflows\scripts\windows\build-dependencies.bat
 
       - name: Generate CMake
         if: inputs.configuration == 'CMake'
